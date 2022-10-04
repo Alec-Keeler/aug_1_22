@@ -1,7 +1,19 @@
+const { application } = require('express');
 const express = require('express');
 
 const router = express.Router();
 
+// For demo
+// router.use((req, res, next) => {
+//   if (req.url.startsWith('/people')) {
+//     next()
+//   } else {
+//     const err = new Error('Not authorized')
+//     next(err)
+//   }
+// })
+
+// /people/
 router.get("/", (req, res) => {
   res.json("Number 1");
 });

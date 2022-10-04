@@ -19,7 +19,8 @@ app.get('/other-resource', (req, res, next) => {
   console.log('Third');
   next();
 }, (req, res, next) => {
-  res.send('Message');
+  return res.send('Message');
+  // res.json()
 });
 
 // Fourth
@@ -41,6 +42,7 @@ app.use('/', [fourth, fifth]);
 app.get('/other-resource', (req, res, next) => {
   console.log('Sixth');
   next();
+  // res.json()
 });
 
 // Seventh
