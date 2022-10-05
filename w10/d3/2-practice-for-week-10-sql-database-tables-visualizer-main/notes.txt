@@ -1,0 +1,20 @@
+Design some tables for an IMDB clone
+
+Tables
+    Movies
+        release date - date
+        name - string TEXT/VARCHAR(50)
+        rating - DECIMAL/NUMERIC/INTEGER
+        money earned
+        length
+    Actors
+        awards
+        age
+        name
+        filmography
+    Images
+    Soundtracks
+    Reviews
+        content
+        rating - INTEGER
+    
