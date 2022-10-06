@@ -4,9 +4,11 @@ Tables
     Movies
         release date - date
         name - string TEXT/VARCHAR(50)
-        rating - DECIMAL/NUMERIC/INTEGER
         money earned
         length
+    MovieActors
+        actor_id
+        movie_id
     Actors
         awards
         age
@@ -17,4 +19,9 @@ Tables
     Reviews
         content
         rating - INTEGER
-    
+        user_id
+        movie_id
+    Users
+        name
+        email
+        password
