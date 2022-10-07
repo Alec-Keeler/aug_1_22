@@ -6,7 +6,7 @@ DROP TABLE IF EXISTS cats;
 
 CREATE TABLE cats (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  name TEXT,
+  name TEXT UNIQUE,
   birth_year INTEGER
 );
 
