@@ -13,6 +13,8 @@ const { Color } = require('./db/models');
   console.log('First Test - null value for name:')
   try {
     await Color.create({})
+    // let col = Color.build({})
+    // col.validate()
     console.log('Result: Invalid Data Allowed in DB (check your validations)\n')
   } catch (err) {
     err.errors.forEach(err => {
