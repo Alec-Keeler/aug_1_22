@@ -4,6 +4,15 @@
 -- Query: Select all cats that have a toy with an id of 5
 
     -- Your code here
+    -- SELECT name FROM cats 
+    -- JOIN cat_toys ON (cats.id = cat_toys.cat_id)
+    -- JOIN toys ON (toys.id = cat_toys.toy_id)
+    -- WHERE toys.id = 5;
+
+    SELECT name FROM cats
+    JOIN cat_toys
+        ON cat_toys.cat_id = cats.id
+    WHERE cat_toys.toy_id = 5;
 
 -- Paste your results below (as a comment):
 
@@ -16,9 +25,16 @@
 -- Query:
 
     -- Your code here
+    EXPLAIN QUERY PLAN
+    SELECT name FROM cats
+    JOIN cat_toys
+        ON cat_toys.cat_id = cats.id
+    WHERE cat_toys.toy_id = 5;
 
 -- Paste your results below (as a comment):
-
+-- QUERY PLAN
+--SCAN TABLE cat_toys
+--SEARCH TABLE cats USING INTEGER PRIMARY KEY (rowid=?)
 
 -- What do your results mean?
 
@@ -38,7 +54,7 @@
     -- Your code here
 
 -- Paste your results below (as a comment):
-
+-- 0.002 seconds without index
 
 
 
@@ -52,7 +68,7 @@
 
 -- Analyze Query:
     -- Your code here
-
+CREATE INDEX idx_cat_toys_toy_id ON cat_toys(toy_id);
 -- Paste your results below (as a comment):
 
 
