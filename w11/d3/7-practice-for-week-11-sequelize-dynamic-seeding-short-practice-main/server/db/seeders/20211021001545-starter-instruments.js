@@ -10,7 +10,8 @@ const instruments = [
   { type: 'violin' },
   { type: 'cello' },
   { type: 'trumpet' },
-  { type: 'saxophone' }
+  { type: 'saxophone' },
+  { type: 'accordian' }
 ]
 
 module.exports = {

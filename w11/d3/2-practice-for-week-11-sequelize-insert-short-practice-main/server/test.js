@@ -4,6 +4,7 @@ const { removeTestDB, runMigrations, runSeeders } = require('./testUtils');
 require('dotenv').config();
 
 const { Puppy } = require('./db/models');
+const puppy = require('./db/models/puppy');
 
 
 (async () => {
@@ -23,6 +24,15 @@ const { Puppy } = require('./db/models');
   // microchipped: false
   try {
     // Your code here
+    let pup = Puppy.build({
+      name: 'Trudy',
+      age_yrs: 2,
+      weight_lbs: 38,
+      breed: 'Brittany Spaniel',
+      microchipped: false
+    })
+    // pup.validate()
+    await pup.save()
   } catch (err) {
     console.error(err)
   }
@@ -36,6 +46,13 @@ const { Puppy } = require('./db/models');
   // breed: Bulldog
   // microchipped: true
   try {
+    let beans = await Puppy.create({
+      name: 'Beans',
+      age_yrs: 1.6,
+      weight_lbs: 42,
+      breed: 'Bulldog',
+      microchipped: true
+    })
     // Your code here
   } catch (err) {
     console.error(err)

@@ -6,7 +6,7 @@ const app = express();
 require('dotenv').config();
 
 // Import the models used in these routes - DO NOT MODIFY
-const { Band, Musician } = require('./db/models');
+const { Band, Musician, Instrument } = require('./db/models');
 
 // Express using json - DO NOT MODIFY
 app.use(express.json());
@@ -41,12 +41,14 @@ app.get('/bands-lazy', async (req, res, next) => {
     for(let i = 0; i < allBands.length; i++){
         const band = allBands[i];
         // Your code here
+        const musicians = await band.getMusicians({order: ['firstName']})
         const bandData = {
             id: band.id,
             name: band.name,
             createdAt: band.createdAt,
             updatedAt: band.updatedAt,
             // Your code here
+            Musicians: musicians
         };
         payload.push(bandData);
     }
@@ -57,6 +59,17 @@ app.get('/bands-lazy', async (req, res, next) => {
 app.get('/bands-eager', async (req, res, next) => {
     const payload = await Band.findAll({
         // Your code here
+        // include: Musician,
+        include: {
+            model: Musician,
+            attributes: ['firstName', 'id'],
+            include: {model: Instrument, through: {
+                attributes: []
+            }}
+        },
+        // include: [Musician, Instrument],
+        // include: [{model: Musician}],
+        order: [['name'], [Musician, 'firstName']]
     });
     res.json(payload);
 });
