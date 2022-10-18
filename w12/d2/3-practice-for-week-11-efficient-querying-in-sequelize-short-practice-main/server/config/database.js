@@ -9,6 +9,8 @@ module.exports = {
     // STEP #0a: Configure Benchmarking
 
     // Your code here
+    benchmark: true,
+    // logging: true
   },
   test: {
     storage: process.env.DB_TEST_FILE,

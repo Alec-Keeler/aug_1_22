@@ -36,14 +36,22 @@ app.get('/test-benchmark-logging', async (req, res) => {   // > 100 ms execution
 // STEP #1: Benchmark a Frequently-Used Query
 app.get('/books', async (req, res) => {
 
+    let where = {};
+    if (req.query.maxPrice) {
+        where.price = {
+            [Op.lt]: req.query.maxPrice
+        }
+    }
+
     let books = await Book.findAll({
         include: Author,
+        ...where
     });
 
     // Filter by price if there is a maxPrice defined in the query params
-    if (req.query.maxPrice) {
-        books = books.filter(book => book.price < parseInt(req.query.maxPrice));
-    };
+    // if (req.query.maxPrice) {
+    //     books = books.filter(book => book.price < parseInt(req.query.maxPrice));
+    // };
     res.json(books);
 });
 
@@ -94,10 +102,14 @@ app.patch('/authors/:authorId/books', async (req, res) => {
         });
     }
 
-    for (let book of author.Books) {
-        book.price = req.body.price;
-        await book.save();
-    }
+    // for (let book of author.Books) {
+        // book.price = req.body.price;
+        // await book.save();
+        await Book.update(
+            { price: req.body.price },
+            { where: { authorId: author.id } }
+        );
+    // }
 
     const books = await Book.findAll({
         where: {

@@ -18,7 +18,7 @@ app.get('/musicians', async (req, res, next) => {
     // Establish base query object to be built up
     let query = {
         where: {},
-        include: []
+        include: [{model: Band}, Instrument]// Band, {model: Band}
     };
 
     // Pagination Options
@@ -39,6 +39,12 @@ app.get('/musicians', async (req, res, next) => {
     // End result: { where: { firstName: req.query.firstName } }
 
     // Your code here
+    if (req.query.firstName) {
+        query.where.firstName = req.query.firstName
+    }
+    if (req.query.lastName) {
+        query.where.lastName = req.query.lastName
+    }
     
     // Add keys to the WHERE clause to match the lastName param, if it exists.
     // End result: { where: { lastName: req.query.lastName } }
@@ -53,7 +59,12 @@ app.get('/musicians', async (req, res, next) => {
     // End result: { include: [{ model: Band, where: { name: req.query.bandName } }] }
 
     // Your code here
-
+    if (req.query.bandName) {
+        query.include.push({
+            model: Band,
+            where: {name: req.query.bandName}
+        })
+    }
 
     // STEP 3: WHERE Clauses on the associated Instrument model 
     // ?instrumentTypes[]=XX&instrumentTypes[]=YY
@@ -71,7 +82,14 @@ app.get('/musicians', async (req, res, next) => {
     */
 
     // Your code here
-
+        // if (req.query.instrumentTypes.length >= 1) {
+        //     query.include.push({
+        //         model: Instrument,
+        //         where: { type: req.query.instrumentTypes },
+        //         // attributes: [],
+        //         through: { attributes: [] }
+        //     })
+        // }
 
     // BONUS STEP 4: Specify Musician attributes to be returned
     // ?&musicianFields[]=XX&musicianFields[]=YY
@@ -81,7 +99,18 @@ app.get('/musicians', async (req, res, next) => {
     // If keyword 'all' is used, do not specify any specific attributes
     // If keyword 'none' is used, do not include any Musician attributes
     // If any other attributes are provided, only include those values
-
+        const { musicianFields } = req.query;
+        if (musicianFields) {
+            if (musicianFields.length >= 1 && musicianFields.includes('none')) {
+                query.attributes = []
+            } else if (musicianFields.length >= 1) {
+                query.attributes = musicianFields
+            } else if (musicianFields.length >= 1 && musicianFields.includes('all')) {
+                if (query.attributes.length >= 1) {
+                    delete query.attributes
+                }
+            }
+        }
     // Your code here
 
 
@@ -121,7 +150,7 @@ app.get('/musicians', async (req, res, next) => {
 
     // Your code here
 
-
+        console.log(query)
     // Perform compiled query
     const musicians = await Musician.findAndCountAll(query);
 
