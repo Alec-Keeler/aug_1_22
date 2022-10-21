@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs')
 
 const hashPass = async(password) => {
-    const hash = await bcrypt.hash(password, 8)
+    const hash = await bcrypt.hash(password, 12)
     console.log(hash)
 }
 
@@ -12,4 +12,8 @@ const comparePass = async(password, hash) => {
     console.log(isPass)
 }
 
-// comparePass('password', '')
+comparePass('password', '$2a$1$W4ypapQgzyPzzVGKjdYkeOqZah0VPuqAh/mXHuMih06LLtWSpybCe')
+
+// $2a + $08 + $R9h/cIPz0gi.URNNX3kh2OP = ST9/PgBkqquzi.Ss7KIUgO2t0jWMUW
+// \__/\/ \____________________/\_____________________________/
+// Alg Cost      Salt 22chars                  Hash
